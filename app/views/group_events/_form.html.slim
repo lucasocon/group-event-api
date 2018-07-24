@@ -1,0 +1,35 @@
+.col-md-12
+  = form_with(model: group_event, local: true) do |form|
+    - if group_event.errors.any?
+      ul
+        - group_event.errors.full_messages.each do |message|
+          li = message
+
+    .form-group
+      = form.label :name
+      = form.text_field :name, id: :group_event_name, class: 'form-control'
+
+    .form-group
+      = form.label :number_days
+      = form.number_field :number_days, id: :group_event_number_days, class: 'form-control'
+
+    .form-group
+      = form.label :description
+      = form.text_area :description, id: :group_event_description, class: 'form-control froalaEditor'
+
+    .form-group
+      = form.label :location
+      = form.text_field :location, id: :group_event_location, class: 'form-control'
+
+    .form-group
+      = form.label :start_date
+      = form.text_field :start_date, id: :group_event_start_date, class: 'form-control datetimepicker-input', data: { toggle: 'datetimepicker', target: '#group_event_start_date', format: 'YYYY-MM-D H:mm:ss' }
+
+    .form-group
+      = form.label :end_date
+      = form.text_field :end_date, id: :group_event_end_date, class: 'form-control datetimepicker-input', data: { toggle: 'datetimepicker', target: '#group_event_end_date' }
+
+    = form.submit 'Update', class: 'btn btn-primary'
+    a.btn.btn-light href='#{group_events_path}' Back
+
+

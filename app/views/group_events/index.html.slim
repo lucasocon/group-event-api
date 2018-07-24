@@ -1,0 +1,39 @@
+h1 Group Events
+
+table.table.table-bordered.table-hover.table-sm
+  thead
+    tr
+      th Name
+      th Start Date
+      th End Date
+      th Duration
+      th Location
+      th publish
+      th
+  tbody
+    - @group_events.each do |group_event|
+     tr
+       td = group_event.name
+       td = group_event&.start_date&.strftime("%F %T")
+       td = group_event&.end_date&.strftime("%F %T")
+       td = group_event.calculate_duration_in_hours
+       td = group_event.location
+       td = group_event.published
+       td 
+        - if !group_event.deleted?
+          = link_to edit_group_event_path(group_event), class: 'btn btn-primary btn-sm', data: { turbolinks: "false" } do
+              i.fa.fa-pencil
+        | &nbsp;
+        = link_to group_event_path(group_event), class: 'btn btn-primary btn-sm' do
+            i.fa.fa-eye
+        | &nbsp;
+        - if !(group_event.published || group_event.deleted?)
+          = link_to group_event_published_path(group_event), class: 'btn btn-warning btn-sm', method: 'patch' do
+              i.fa.fa-calendar
+        | &nbsp;
+        - if !group_event.deleted?
+          = link_to "/group_events/" + group_event.id.to_s, class: 'btn btn-danger btn-sm', method: 'delete', data: { confirm: 'Are you sure?' } do
+              i.fa.fa-trash
+        
+
+= link_to 'New Group Event', new_group_event_path, class: 'btn btn-primary', data: { turbolinks: "false" }

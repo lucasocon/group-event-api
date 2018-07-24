@@ -1,0 +1,37 @@
+.col-md-12
+  h1 Group Event
+    
+  dl
+    dt Name:
+    dd #{@group_event.name}
+
+    dt Start Date: 
+    dd #{@group_event&.start_date&.strftime("%F %T")}
+
+    dt End Date:
+    dd #{@group_event&.end_date&.strftime("%F %T")}
+
+    dt Duration:
+    dd #{@group_event.calculate_duration_in_hours}
+
+    dt Location:
+    dd #{@group_event.location}
+
+    dt Number days:
+    dd #{@group_event.number_days}
+
+    dt description:
+    dd #{@group_event.description.html_safe}
+
+    - if @group_event.published
+        .card.text-white.bg-primary.mb-3 style="max-width: 18rem;"
+          .card-header Event is published
+
+    - if @group_event.deleted?
+        .card.text-white.bg-danger.mb-3 style="max-width: 18rem;"
+          .card-header Event Deleted!
+
+
+= link_to 'Edit', edit_group_event_path(@group_event), class: 'btn btn-primary', data: { turbolinks: "false" }
+| &nbsp;
+= link_to 'Back', group_events_path, class: 'btn btn-light'
